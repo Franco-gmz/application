@@ -2,11 +2,17 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
+import { AccountComponent } from './views/account/account.component';
+import { ContactComponent } from './views/contact/contact.component';
+import { HomeComponent } from './views/home/home.component';
+import { ProductsComponent } from './views/products/products.component';
 
 const routes: Routes = [
 
-  {path:'ingresar', component:LoginComponent},
-  {path:'registrarse', component:RegisterComponent}
+  {path:'inicio', component:HomeComponent},
+  {path:'productos', component:ProductsComponent},
+  {path:'contacto',component:ContactComponent},
+  {path:'cuenta', component:AccountComponent}
 ];
 
 @NgModule({

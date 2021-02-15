@@ -1,18 +1,14 @@
 <div class="container">   
     <div class="row">
-        <div class="col s12">
-            <div class="row">
-                <div class="col s8 offset-s2">
-                    <form [formGroup]="registerForm" (ngSubmit)="register()">
-                        <div class="input-field"><input formControlName="name" placeholder="Nombre"></div>
-                        <div class="input-field"><input formControlName="surname" placeholder="Apellido"></div>
-                        <div class="input-field"><input formControlName="email" placeholder="Correo electrónico"></div>
-                        <div class="input-field"><input formControlName="phone" placeholder="Celular"></div>
-                        <div class="input-field"><input formControlName="password" type="password" placeholder="Contraseña"></div>
-                        <div class="input-field"><input type="submit" value="Registrarse" id="submitButton"></div>
-                    </form>
-                </div>
-            </div>
+        <div class="col s8 offset-s2">
+            <form [formGroup]="registerForm" (ngSubmit)="register()">
+                <div class="input-field"><input formControlName="name" placeholder="Nombre"></div>
+                <div class="input-field"><input formControlName="surname" placeholder="Apellido"></div>
+                <div class="input-field"><input formControlName="email" placeholder="Correo electrónico"></div>
+                <div class="input-field"><input formControlName="phone" placeholder="Celular"></div>
+                <div class="input-field"><input formControlName="password" type="password" placeholder="Contraseña"></div>
+                <div class="input-field"><input type="submit" value="Registrarse" id="submitButton"></div>
+            </form>
         </div>
     </div>
 </div>
