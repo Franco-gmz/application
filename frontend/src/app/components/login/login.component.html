@@ -1,0 +1,15 @@
+<div class="container">   
+    <div class="row">
+        <div class="col s12">
+            <div class="row">
+                <div class="col s8 offset-s2">
+                    <form [formGroup]="loginForm" (ngSubmit)="login()">
+                        <div class="input-field"><input formControlName="email" placeholder="Correo electrónico"></div>
+                        <div class="input-field"><input formControlName="password" type="password" placeholder="Contraseña"></div>
+                        <div class="input-field"><input type="submit" value="Ingresar" id="submitButton"></div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
