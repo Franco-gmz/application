@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const usersRouter = require('../routes/users/routes');
+const passport = require('../auth/auth');
 
 //Initialization
 
@@ -16,6 +17,7 @@ app.set('port',process.env.PORT || 3000);
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({extended:false}));
+app.use(passport.initialize());
 
 //Routes
 

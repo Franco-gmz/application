@@ -1,16 +1,20 @@
 const router = require('express').Router();
-const createUser = require('../../db/crud/user/createUser');
+const passport = require('../../auth/auth');
+
 
 router.get('/test',(req,res) => res.send('<h1>HOLA</h1>'));
 
 
 router.post('/register',(req,res) => {
-    createUser(req.body)
-    .then(_ => {return 'string retornado'})
-    .then(msg => res.send('<h1>'+msg+'</h1>'))
-    .catch(err => console.log(err));
-
+    res.send('todo ok')
 });
+
+router.post('/login',(req,res,next) => { 
+    passport.authenticate('login',{ session: false }, (err,user,info) => {
+        if(err) res.send(err);
+        else if(!user) res.send({message:info.message});
+        else res.send(user);})
+    (req,res)});
 
 
 module.exports = router;
