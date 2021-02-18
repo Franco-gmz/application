@@ -2,16 +2,12 @@ const passport = require('passport');
 const localStrategy = require('passport-local').Strategy;
 require('../db/connection/dbConnection');
 const User = require('../db/crud/users');
-const validations = require('../validation/registerValidation');
-const { validationResult } = require('express-validator');
 
-
-const options = { usernameField:'email', passwordField:'password' }
+const options = { usernameField:'email', passwordField:'password' };
 
 passport.use('login', new localStrategy(options, (email,password,done) => {
-
     try{
-        User.get(email, async (user)=> {
+        User.getByEmail(email, async (user)=> {
             if(!user) return done(null, false, { message: 'Este usuario no existe' });
             else{
                 let match = await user.matchPassword(password);

@@ -18,8 +18,16 @@ CRUD.create = async (user) => {
     await newUser.save();
 };
 
-CRUD.get = async (email,done) => {
+CRUD.getByEmail = async (email,done) => {
     await User.findOne({ email:email }, (err,user) => {
+        if(err) throw(err);
+        else if(!user) done(null);
+        else done(user);
+    });
+};
+
+CRUD.getById = async (id,done) => {
+    await User.findOne({ _id:id }, (err,user) => {
         if(err) throw(err);
         else if(!user) done(null);
         else done(user);
