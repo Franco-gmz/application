@@ -1,15 +1,22 @@
 const router = require('express').Router();
-const { validationResult } = require('express-validator');
 const passport = require('../../auth/auth');
 const validation = require('../../validation/registerValidation');
 
 router.get('/test',(req,res) => res.send('<h1>HOLA</h1>'));
 
+//Middlewares
+router.use('/register', (req,res,next) =>{
+    validation(req, (valid) => {
+        if(valid) req.valid = true;
+        else req.valid = false;
+        next();
+    });  
+})
 
-router.post('/register',validation,(req,res) => {
-    let errors = validationResult(req);
-    if(errors.isEmpty()) res.status(200).send({message:'Todo OK'});
-    else res.status(401).send({message:'Invalid inputs'});
+//Routes
+router.post('/register',(req,res) => {
+    if(req.valid) res.send({message:'TODO OK'});
+    else res.send({message:'INVALID'});
 });
 
 router.post('/login',(req,res,next) => { 
