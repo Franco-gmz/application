@@ -18,9 +18,20 @@ router.use('/register', (req,res,next) =>{
 });
 
 //Routes
+//CREAR USER Y GENERAR TOKEN
 router.post('/register',(req,res) => {
-    if(req.valid) res.send({message:'TODO OK'});
-    else res.send({message:'INVALID'});
+    if(req.valid) {
+        try{
+            User.create(req.body, userId => {
+                token = jwt.sign({id: userId},jwtConfig.secretKey, { expiresIn: 60*60*24 });
+                res.status(200).send({token: token});
+            });
+        }
+        catch(err){
+            res.status(500).send({message:'Server error'});
+        }
+    }
+    else res.status(401).send({message:'Invalid inputs'}); //No es 401 - busca codigo para invalid input
 });
 
 router.post('/login',(req,res,next) => { 

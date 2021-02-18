@@ -4,7 +4,7 @@ const bcrypt = require('bcryptjs');
 
 const CRUD = {};
 
-CRUD.create = async (user) => {
+CRUD.create = async (user,done) => {
     newUser = new User({
         name: user.name,
         surname: user.surname,
@@ -16,6 +16,7 @@ CRUD.create = async (user) => {
     newUser.password = await newUser.encryptPassword(newUser.password);
 
     await newUser.save();
+    done(newUser._id);
 };
 
 CRUD.getByEmail = async (email,done) => {
