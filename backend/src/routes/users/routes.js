@@ -17,8 +17,15 @@ router.use('/register', (req,res,next) =>{
     });  
 });
 
+router.use('/update',(req,res,next) => {
+
+    if(req.query.field == 'points' || req.query.field == 'purchases') req.valid = false;
+    else req.valid = true;
+    next();
+})
+
 //Routes
-//CREAR USER Y GENERAR TOKEN
+
 router.post('/register',(req,res) => {
     if(req.valid) {
         try{
@@ -45,6 +52,8 @@ router.post('/login',(req,res,next) => {
     })(req,res,next)
 });
 
+//Protected routes
+
 router.get('/user', (req,res) => {
 
     let authorizationToken = req.headers.authorization;
@@ -65,6 +74,23 @@ router.get('/user', (req,res) => {
             res.status(500).send({err});
         }
     }
+});
+
+router.put('/update', (req,res) => {
+    if(req.valid){
+        let authorizationToken = req.headers.authorization;
+        if(!authorizationToken) res.status(401).send({message:'Must provide an access token'});
+        try{
+            let decoded = jwt.verify(authorizationToken,secretKey);
+            User.update(decoded.id,req.query.field,req.query.value, _ => {
+                res.status(200).send({message:'Field updated'});
+            });
+        }
+        catch(err){
+            res.status(500).send({message:'Server error'});
+        }
+    }
+    else res.status(401).send({message:'Invalid field'});
 });
 
 

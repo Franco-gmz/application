@@ -35,4 +35,10 @@ CRUD.getById = async (id,done) => {
     });
 };
 
+CRUD.update = async (id,field,value,done) => {
+    let update = {};
+    update[field] = value;
+    await User.findOneAndUpdate({_id:id}, { $set: update}, done);
+};
+
 module.exports = CRUD;
