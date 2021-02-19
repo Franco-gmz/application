@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { UserService } from 'src/app/services/user.service';
 
 declare const M:any;
 
@@ -9,11 +10,15 @@ declare const M:any;
 })
 export class AccountComponent implements OnInit {
 
-  constructor() { }
+  constructor(private userService:UserService) { }
 
   ngOnInit(): void {
     var el = document.querySelectorAll('.tabs');
     var instance = M.Tabs.init(el, {});
+  }
+
+  getUserData(){
+    this.userService.getUserData();
   }
 
 }

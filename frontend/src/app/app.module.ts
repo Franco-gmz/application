@@ -13,6 +13,9 @@ import { ProductsComponent } from './views/products/products.component';
 import { ContactComponent } from './views/contact/contact.component';
 import { AccountComponent } from './views/account/account.component';
 
+import { HttpClientModule } from '@angular/common/http';
+import { ProfileComponent } from './components/profile/profile.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -22,12 +25,14 @@ import { AccountComponent } from './views/account/account.component';
     HomeComponent,
     ProductsComponent,
     ContactComponent,
-    AccountComponent
+    AccountComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

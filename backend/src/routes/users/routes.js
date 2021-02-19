@@ -31,7 +31,7 @@ router.post('/register',(req,res) => {
         try{
             User.create(req.body, userId => {
                 token = jwt.sign({id: userId},jwtConfig.secretKey, { expiresIn: 60*60*24 });
-                res.status(200).send({token: token});
+                res.status(200).json({token: token});
             });
         }
         catch(err){
@@ -55,9 +55,7 @@ router.post('/login',(req,res,next) => {
 //Protected routes
 
 router.get('/user', (req,res) => {
-
-    let authorizationToken = req.headers.authorization;
-
+    let authorizationToken = req.header('authorization').split(' ')[1];
     if(!authorizationToken) res.status(401).send({message:'Debe proveer un token de acceso'});
     else{
         try{
@@ -78,7 +76,7 @@ router.get('/user', (req,res) => {
 
 router.put('/update', (req,res) => {
     if(req.valid){
-        let authorizationToken = req.headers.authorization;
+        let authorizationToken = req.header('authorization').split(' ')[1];
         if(!authorizationToken) res.status(401).send({message:'Debe proveer un token de acceso'});
         try{
             let decoded = jwt.verify(authorizationToken,secretKey);
@@ -94,7 +92,7 @@ router.put('/update', (req,res) => {
 });
 
 router.delete('/delete',(req,res) => {
-    let authorizationToken = req.headers.authorization;
+    let authorizationToken = req.header('authorization').split(' ')[1];
     if(!authorizationToken) res.status(401).send({message:'Debe proveer un token de acceso'});
     try{
         let decoded = jwt.verify(authorizationToken,secretKey);
