@@ -35,10 +35,10 @@ router.post('/register',(req,res) => {
             });
         }
         catch(err){
-            res.status(500).send({message:'Server error'});
+            res.status(500).send({message:'Intentelo mas tarde'});
         }
     }
-    else res.status(401).send({message:'Invalid inputs'}); //No es 401 - busca codigo para invalid input
+    else res.status(401).send({message:'Formulario de registro inválido'}); 
 });
 
 router.post('/login',(req,res,next) => { 
@@ -58,7 +58,7 @@ router.get('/user', (req,res) => {
 
     let authorizationToken = req.headers.authorization;
 
-    if(!authorizationToken) res.status(401).send({message:'Must provide an access token'});
+    if(!authorizationToken) res.status(401).send({message:'Debe proveer un token de acceso'});
     else{
         try{
             let decoded = jwt.verify(authorizationToken,secretKey);
@@ -67,7 +67,7 @@ router.get('/user', (req,res) => {
                     const {name,surname,email,points,purchases} = user;
                     res.status(200).send({name:name,surname:surname,email:email,points:points,purchases:purchases});
                 }
-                else res.status(401).send({message:'Invalid token'});
+                else res.status(401).send({message:'Token inválido'});
             })
         }
         catch(err){
@@ -79,18 +79,32 @@ router.get('/user', (req,res) => {
 router.put('/update', (req,res) => {
     if(req.valid){
         let authorizationToken = req.headers.authorization;
-        if(!authorizationToken) res.status(401).send({message:'Must provide an access token'});
+        if(!authorizationToken) res.status(401).send({message:'Debe proveer un token de acceso'});
         try{
             let decoded = jwt.verify(authorizationToken,secretKey);
             User.update(decoded.id,req.query.field,req.query.value, _ => {
-                res.status(200).send({message:'Field updated'});
+                res.status(200).send({message:'Actualizado correctamente'});
             });
         }
         catch(err){
-            res.status(500).send({message:'Server error'});
+            res.status(500).send({message:'Intentalo mas tarde'});
         }
     }
-    else res.status(401).send({message:'Invalid field'});
+    else res.status(401).send({message:'No es posible modificar este dato'});
+});
+
+router.delete('/delete',(req,res) => {
+    let authorizationToken = req.headers.authorization;
+    if(!authorizationToken) res.status(401).send({message:'Debe proveer un token de acceso'});
+    try{
+        let decoded = jwt.verify(authorizationToken,secretKey);
+        User.delete(decoded.id, _ => {
+            res.status(200).send({message:'Cuenta eliminada correctamente'});
+        });
+    }
+    catch(err){
+        res.status(500).send({message:'Intentelo mas tarde'});
+    }
 });
 
 

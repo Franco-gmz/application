@@ -41,4 +41,8 @@ CRUD.update = async (id,field,value,done) => {
     await User.findOneAndUpdate({_id:id}, { $set: update}, done);
 };
 
+CRUD.delete = async (id,done) => {
+    await User.deleteOne({_id:id},done);
+}
+
 module.exports = CRUD;
